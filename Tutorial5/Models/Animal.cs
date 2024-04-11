@@ -8,3 +8,6 @@ public class Animal
     public double Weight { get; set; }
     public string FurColor { get; set; }
 }
+
+
+
