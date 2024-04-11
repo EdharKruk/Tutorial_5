@@ -32,6 +32,23 @@ app.MapPost("/animals", (Animal animal) =>
     return Results.Created($"/animals/{animal.Id}", animal);
 });
 
+app.MapPut("/animals/{id}", (int id, Animal updatedAnimal) => {
+    var animal = animals.FirstOrDefault(a => a.Id == id);
+    if (animal == null) return Results.NotFound();
+    animal.Name = updatedAnimal.Name;
+    animal.Category = updatedAnimal.Category;
+    animal.Weight = updatedAnimal.Weight;
+    animal.FurColor = updatedAnimal.FurColor;
+    return Results.NoContent();
+});
+
+app.MapDelete("/animals/{id}", (int id) => {
+    var animal = animals.FirstOrDefault(a => a.Id == id);
+    if (animal == null) return Results.NotFound();
+    animals.Remove(animal);
+    return Results.NoContent();
+});
+
 app.MapControllers();
 
 app.Run();
