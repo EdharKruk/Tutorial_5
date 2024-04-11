@@ -1,3 +1,5 @@
+using WebApplication1.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -17,10 +19,17 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+var animals = new List<Animal>();
+var visits = new List<Visit>();
 
-app.MapGet("/weatherforecast", () =>
+app.MapGet("/animals", () => animals);
+
+app.MapGet("/animals/{id}", (int id) => animals.FirstOrDefault(a => a.Id == id));
+
+app.MapPost("/animals", (Animal animal) =>
 {
-
+    animals.Add(animal);
+    return Results.Created($"/animals/{animal.Id}", animal);
 });
 
 app.MapControllers();
