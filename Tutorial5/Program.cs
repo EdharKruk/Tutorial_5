@@ -49,6 +49,16 @@ app.MapDelete("/animals/{id}", (int id) => {
     return Results.NoContent();
 });
 
+app.MapGet("/visits", () => visits);
+
+app.MapGet("/visits/{animalId}", (int animalId) => visits.Where(v => v.AnimalId == animalId).ToList());
+
+app.MapPost("/visits", (Visit visit) => {
+    visits.Add(visit);
+    return Results.Created($"/visits/{visit.Id}", visit);
+});
+
+
 app.MapControllers();
 
 app.Run();
